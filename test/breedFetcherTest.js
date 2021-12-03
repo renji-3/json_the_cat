@@ -1,6 +1,7 @@
 const { fetchBreedDescription } = require('../breedFetcher');
 const { assert } = require('chai');
 
+
 describe('fetchBreedDescription', () => {
   it('returns a string description for a valid breed, via callback', (done) => {
     fetchBreedDescription('Siberian', (err, desc) => {
@@ -27,6 +28,3 @@ describe('fetchBreedDescription', () => {
   });
 });
 
-//QUESTIONS
-//why do we need to export and import using brackets, we never had to before, but without it the code fails assertion
-//assertion not working
