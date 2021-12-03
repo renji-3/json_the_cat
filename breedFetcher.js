@@ -1,21 +1,25 @@
 const request = require('request');
-const arg = process.argv.slice(2);
 
-request('https://api.thecatapi.com/v1/breeds/search?q=' + arg, (error, response, body) => {
-  if (!error) {
-    const data = JSON.parse(body);
-    // console.log(data);
-    // console.log(typeof data);
-    if (data.length <= 0) {
-      console.log('yeet');
+
+const fetchBreedDescription = function(breedName, callback) {
+
+  request('https://api.thecatapi.com/v1/breeds/search?q=' + breedName, (error, response, body) => {
+    if (!error) { //if no error
+      const data = JSON.parse(body); //turn into array
+      if (data.length <= 0) { //if array is 0 or less
+        return callback('breed not found', null);//
+      }
+      return callback(null, data[0].description);
     } else {
-      console.log(data[0].description);
+      return callback(error, null);
     }
-  } else {
-    console.log('error:', error);
-  }
-});
+  });
 
 
-// removing response causes error even though its unused
+};
+
+//removing request causes a syntax error because request library expects the order of variables to be error response body, removing response makes it think that body is response
 //https://api.thecatapi.com/v1/breeds/search?q='
+
+module.exports = { fetchBreedDescription };
+
